@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hỗ Trợ Đồ Án - Web, Mobile App & IoT Chuyên Nghiệp | Zalo 0394.241.597</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(20, 27, 45, 0.7);
+      --card-border: rgba(56, 189, 248, 0.15);
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --accent: #f59e0b;
+      --zalo: #0068ff;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 60%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.3rem;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-zalo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #0068ff, #0052cc);
+      color: #fff;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      box-shadow: 0 4px 14px rgba(0, 104, 255, 0.35);
+      transition: all 0.25s ease;
+      font-size: 0.95rem;
+    }
+
+    .btn-zalo:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 104, 255, 0.55);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 70px 0 50px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #38bdf8, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #38bdf8, #0284c7);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 13px 28px;
+      border-radius: 12px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(56, 189, 248, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-weight: 600;
+      padding: 13px 28px;
+      border-radius: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 40px 0 70px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .stat-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Services */
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title h2 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 70px;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .service-icon {
+      font-size: 2.4rem;
+      margin-bottom: 18px;
+    }
+
+    .service-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 16px;
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+
+    /* Workflow */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 70px;
+    }
+
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+    }
+
+    .step-num {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #0b0f19;
+      margin-bottom: 16px;
+    }
+
+    .step-card h4 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .step-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* CTA Card */
+    .cta-box {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(168, 85, 247, 0.15));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 24px;
+      padding: 50px 30px;
+      text-align: center;
+      margin-bottom: 70px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .cta-box h2 {
+      font-size: 2.2rem;
+      margin-bottom: 14px;
+    }
+
+    .cta-box p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 28px;
+      font-size: 1.05rem;
+    }
+
+    .hotline-link {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #38bdf8;
+      display: inline-block;
+      margin-top: 10px;
+      letter-spacing: 1px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 30px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Floating Zalo */
+    .floating-zalo {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #0068ff;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(0, 104, 255, 0.45);
+      animation: pulse 2s infinite;
+      transition: transform 0.2s ease;
+    }
+
+    .floating-zalo:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0.6); }
+      70% { box-shadow: 0 0 0 16px rgba(0, 104, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="container nav-inner">
+      <div class="logo">
+        <span>⚡ HỘI TRỢ ĐỒ ÁN</span>
+      </div>
+      <div>
+        <a href="https://zalo.me/0394241597" target="_blank" class="btn-zalo">
+          💬 Zalo: 0394.241.597
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="badge">🔥 Dịch Vụ Đồ Án Trọn Gói - Uy Tín Hàng Đầu</div>
+      <h1>Hỗ Trợ Đồ Án Chuyên Nghiệp<br><span>Web &bull; Mobile App &bull; IoT Nhúng</span></h1>
+      <p>Nhận tư vấn, thiết kế, lập trình và hoàn thiện bài tập lớn, đồ án tốt nghiệp từ cơ bản đến nâng cao. Đảm bảo 100% bàn giao mã nguồn, hướng dẫn giải thích code chi tiết và đồng hành đến khi bảo vệ thành công!</p>
+      
+      <div class="hero-actions">
+        <a href="https://zalo.me/0394241597" target="_blank" class="btn-primary">
+          📲 Nhắn Zalo Tư Vấn Ngay: 0394.241.597
+        </a>
+        <a href="#services" class="btn-secondary">
+          Xem Các Dịch Vụ
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="container">
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-num">500+</div>
+        <div class="stat-desc">Đồ Án Đã Hoàn Thành</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-desc">Bàn Giao Full Mã Nguồn</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1 - 1</div>
+        <div class="stat-desc">Hướng Dẫn Demo & Báo Cáo</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">24/7</div>
+        <div class="stat-desc">Hỗ Trợ Kỹ Thuật Linh Hoạt</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section id="services" class="container">
+    <div class="section-title">
+      <h2>Dịch Vụ Hỗ Trợ Đa Dạng</h2>
+      <p>Đáp ứng mọi yêu cầu công nghệ và độ khó của đề tài</p>
+    </div>
+
+    <div class="services-grid">
+      <!-- IoT -->
+      <div class="service-card">
+        <div class="service-icon">🔌</div>
+        <h3>IoT & Hệ Thống Nhúng</h3>
+        <p>Lập trình điều khiển vi điều khiển, kết nối cảm biến, điều khiển qua Web / App, truyền thông xa và thu thập dữ liệu thời gian thực.</p>
+        <div class="service-tags">
+          <span class="tag">ESP32 / ESP8266</span>
+          <span class="tag">STM32 / Arduino</span>
+          <span class="tag">Raspberry Pi</span>
+          <span class="tag">MQTT / Blynk / Firebase</span>
+          <span class="tag">LoRa / BLE / Zigbee</span>
+        </div>
+      </div>
+
+      <!-- Web -->
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>Phát Triển Website</h3>
+        <p>Xây dựng web quản trị, dashboard giám sát IoT, website bán hàng, quản lý trường học, tích hợp thanh toán và xác thực an toàn.</p>
+        <div class="service-tags">
+          <span class="tag">React / Vue / Next.js</span>
+          <span class="tag">Node.js / Express</span>
+          <span class="tag">Python Django / FastAPI</span>
+          <span class="tag">PHP Laravel / MySQL</span>
+        </div>
+      </div>
+
+      <!-- App -->
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Mobile App Đa Nền Tảng</h3>
+        <p>Phát triển ứng dụng Android & iOS giao diện mượt mà, kết nối Bluetooth BLE, quét QR, điều khiển thiết bị phần cứng thông minh.</p>
+        <div class="service-tags">
+          <span class="tag">Flutter</span>
+          <span class="tag">React Native</span>
+          <span class="tag">BLE / WiFi Control</span>
+          <span class="tag">Push Notification</span>
+        </div>
+      </div>
+
+      <!-- Hardware -->
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <h3>Thiết Kế Mạch & Mô Hình</h3>
+        <p>Vẽ sơ đồ nguyên lý, thiết kế mạch in PCB 2 lớp trên Altium/Proteus, gia công phần cứng, đóng gói hộp mô hình và in 3D hoàn chỉnh.</p>
+        <div class="service-tags">
+          <span class="tag">Altium Designer</span>
+          <span class="tag">Proteus Simulation</span>
+          <span class="tag">Thi Công Mạch PCB</span>
+          <span class="tag">In 3D / Mô Hình</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <div class="container">
+    <div class="section-title">
+      <h2>Quy Trình Hỗ Trợ 4 Bước</h2>
+      <p>Rõ ràng, minh bạch và đảm bảo đúng tiến độ</p>
+    </div>
+
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>Tiếp Nhận Đề Tài</h4>
+        <p>Trao đổi yêu cầu đề tài, tính năng cần có và thời hạn nộp bài qua Zalo.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>Báo Giá & Lên Kế Hoạch</h4>
+        <p>Đưa ra giải pháp tối ưu chi phí, phù hợp với sinh viên và thống nhất mốc thời gian.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Lập Trình & Demo</h4>
+        <p>Tiến hành code, quay video demo tính năng từng giai đoạn để bạn kiểm tra.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Bàn Giao & Hướng Dẫn</h4>
+        <p>Bàn giao toàn bộ code, file thiết kế và gọi điện/Ultraviewer hướng dẫn hiểu code 1-1.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Box -->
+  <div class="container">
+    <div class="cta-box">
+      <h2>Bạn Cần Hỗ Trợ Đề Tài Nhanh Chóng?</h2>
+      <p>Đừng ngần ngại nhắn tin ngay qua Zalo để được đội ngũ kỹ sư tư vấn hướng làm và hỗ trợ hoàn thiện đồ án đạt điểm cao nhất!</p>
+      <a href="https://zalo.me/0394241597" target="_blank" class="btn-primary" style="font-size: 1.1rem; padding: 15px 36px;">
+        💬 Nhắn Tin Zalo: 0394.241.597
+      </a>
+      <div>
+        <a href="tel:0394241597" class="hotline-link">📞 Hotline: 0394.241.597</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Hội Trợ Đồ Án - Chuyên Đồ Án Web, App, IoT Các Loại &bull; Hotline/Zalo: <strong>0394.241.597</strong></p>
+    </div>
+  </footer>
+
+  <!-- Floating Zalo Button -->
+  <a href="https://zalo.me/0394241597" target="_blank" class="floating-zalo">
+    <span>💬 Chat Zalo: 0394.241.597</span>
+  </a>
+
+</body>
+</html>

@@ -174,6 +174,10 @@ static const char PAGE_HTML[] PROGMEM = R"rawliteral(
     <span>IP: <b id="ipLabel">...</b></span>
   </div>
 
+  <div style="font-size: 11px; color: #7f8ca8; text-align: center; margin-top: 4px;">
+    Hỗ Trợ Đồ Án (Web / App / IoT) &bull; Zalo: <a href="https://zalo.me/0394241597" target="_blank" style="color: #4f9bff; text-decoration: none; font-weight: 600;">0394.241.597</a>
+  </div>
+
 <script>
   const MAX = 255;
   const names = { f: 'TIEN', b: 'LUI', l: 'QUAY TRAI', r: 'QUAY PHAI', s: 'DUNG' };

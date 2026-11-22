@@ -2,6 +2,9 @@
 
 Dự án xe ô tô / robot điều khiển từ xa thông qua giao diện Web trực quan, chạy trên vi điều khiển **ESP32** kết hợp mạch điều khiển động cơ **L298N**. Không cần cài app phức tạp, chỉ cần kết nối WiFi và mở trình duyệt trên điện thoại hoặc máy tính là có thể điều khiển trực tiếp.
 
+[![Zalo Contact](https://img.shields.io/badge/Zalo-0394.241.597-blue?style=for-the-badge&logo=zalo)](https://zalo.me/0394241597)
+[![Support](https://img.shields.io/badge/H%E1%BB%97%20Tr%E1%BB%A3%20%C4%90%E1%BB%93%20%C3%81n-Web%20%7C%20App%20%7C%20IoT-orange?style=for-the-badge)](https://zalo.me/0394241597)
+
 ---
 
 ## 🌟 Tính Năng Nổi Bật
@@ -40,7 +43,10 @@ Dự án xe ô tô / robot điều khiển từ xa thông qua giao diện Web tr
 
 ### Chuẩn bị
 1. Cài đặt **Visual Studio Code** và extension **PlatformIO IDE**.
-2. Clone hoặc tải project về máy.
+2. Clone hoặc tải project về máy:
+   ```bash
+   git clone https://github.com/Hoi-Tro-Do-An/o-to-dieu-khien.git
+   ```
 
 ### Cấu hình WiFi (Tùy chọn)
 Mở file `src/main.cpp`, tìm đoạn cấu hình:
@@ -75,10 +81,30 @@ const char *WIFI_PASS = "MAT_KHAU_WIFI";
 ## 🤝 DỊCH VỤ HỖ TRỢ ĐỒ ÁN - WEB, APP, IOT CÁC LOẠI
 
 > 💡 **Bạn đang cần làm đồ án tốt nghiệp, bài tập lớn, hoặc dự án thực tế?**  
-> Chúng tôi nhận tư vấn, thiết kế, lập trình và hỗ trợ trọn gói các giải pháp:
-> - 🌐 **Website**: Fullstack Web (NodeJS, React, Vue, PHP, Python, Django, FastAPI...)
-> - 📱 **Mobile App**: Ứng dụng Android & iOS (Flutter, React Native...)
-> - 🔌 **Hệ thống IoT & Nhúng**: ESP32, ESP8266, STM32, Arduino, Raspberry Pi kết hợp MQTT, Blynk, Firebase, Web Server, Bluetooth, LoRa, v.v.
-> - ⚙️ **Thiết kế mạch & Tự động hoá**: Vẽ sơ đồ Altium, mô phỏng Proteus, làm mạch hoàn chỉnh.
+> Đội ngũ nhận tư vấn, thiết kế, lập trình và hỗ trợ trọn gói từ A - Z:
 
-📩 **Liên hệ & Hợp tác**: Thông qua GitHub Repository hoặc các kênh hỗ trợ chính thức của [Hội Trợ Đồ Án](https://github.com/Hoi-Tro-Do-An).
+- 🔌 **Hệ thống IoT & Nhúng**: 
+  - Vi điều khiển: ESP32, ESP8266, STM32, Arduino, Raspberry Pi, nRF52...
+  - Giao thức & Nền tảng: MQTT, HTTP REST, WebSocket, Blynk IoT, Firebase, AWS IoT.
+  - Ứng dụng: Xe tự hành, Smart Home, trạm quan trắc môi trường, máy điểm danh vân tay/RFID, định vị GPS, điều khiển qua LoRa khoảng cách xa.
+- 🌐 **Web Application**:
+  - Fullstack Web: NodeJS, React, Vue, Python (Django, FastAPI), PHP (Laravel).
+  - Web Dashboard giám sát và điều khiển thiết bị phần cứng thời gian thực.
+- 📱 **Mobile App**:
+  - Ứng dụng Android & iOS (Flutter, React Native) kết nối Bluetooth BLE, WiFi, Cloud.
+- ⚙️ **Thiết kế phần cứng & Mạch in**:
+  - Thiết kế sơ đồ nguyên lý & Layout PCB trên Altium Designer, Proteus.
+  - Gia công mạch in, hàn linh kiện và lắp ráp mô hình hoàn chỉnh.
+
+### 🌟 Quyền Lợi Khi Được Hỗ Trợ:
+✅ Bàn giao đầy đủ mã nguồn (Full source code), sơ đồ nguyên lý, file thiết kế.  
+✅ Hướng dẫn nạp code, chạy thử và giải thích chi tiết từng dòng code.  
+✅ Hỗ trợ chỉnh sửa và bổ sung tính năng theo yêu cầu của Giảng viên hướng dẫn.  
+✅ Hỗ trợ chuẩn bị slide thuyết trình, tài liệu báo cáo đồ án.
+
+---
+
+### 📞 THÔNG TIN LIÊN HỆ:
+- 📱 **Zalo / Hotline**: [**0394.241.597**](https://zalo.me/0394241597) *(Nhấp vào để chat Zalo ngay)*
+- 🌐 **Trang giới thiệu chi tiết**: Xem file [gioi-thieu.html](file:///c:/Users/fpt/Documents/PlatformIO/Projects/phaocuusinh/gioi-thieu.html) hoặc mở trên trình duyệt.
+- 💻 **GitHub**: [Hội Trợ Đồ Án](https://github.com/Hoi-Tro-Do-An)
