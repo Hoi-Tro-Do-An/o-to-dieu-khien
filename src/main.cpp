@@ -89,10 +89,10 @@ const char *dirName(char dir) {
 
 bool applyCommand(char dir) {
   switch (dir) {
-    case 'f': setLeftMotor(speed);   setRightMotor(speed);  moving = true;  break;
-    case 'b': setLeftMotor(-speed);  setRightMotor(-speed); moving = true;  break;
-    case 'l': setLeftMotor(-speed);  setRightMotor(speed);  moving = true;  break;
-    case 'r': setLeftMotor(speed);   setRightMotor(-speed); moving = true;  break;
+    case 'f': setLeftMotor(-speed);  setRightMotor(-speed); moving = true;  break;
+    case 'b': setLeftMotor(speed);   setRightMotor(speed);  moving = true;  break;
+    case 'l': setLeftMotor(speed);   setRightMotor(-speed); moving = true;  break;
+    case 'r': setLeftMotor(-speed);  setRightMotor(speed);  moving = true;  break;
     case 's': carStop();                                    break;
     default: return false;
   }
