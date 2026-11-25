@@ -74,6 +74,7 @@ void carStop() {
   setLeftMotor(0);
   setRightMotor(0);
   moving = false;
+  currentDir = 's';
 }
 
 const char *dirName(char dir) {
@@ -128,6 +129,7 @@ static const char PAGE_HTML[] PROGMEM = R"rawliteral(
     color: #cfe0ff; font-size: 34px; display: flex; align-items: center; justify-content: center;
     cursor: pointer; transition: transform .06s, background .12s, box-shadow .12s;
     box-shadow: 0 6px 14px rgba(0,0,0,.35);
+    touch-action: none; -webkit-user-select: none; user-select: none;
   }
   button.ctl:active, button.ctl.on {
     background: linear-gradient(180deg, #2f7bff, #1b52c4);
@@ -140,16 +142,17 @@ static const char PAGE_HTML[] PROGMEM = R"rawliteral(
   .right { grid-column: 3; grid-row: 2; }
   .down  { grid-column: 2; grid-row: 3; }
 
-  .speed-box { width: 100%; max-width: 380px; background: #131b2b; border: 1px solid #223050; border-radius: 16px; padding: 14px 18px; }
-  .speed-row { display: flex; justify-content: space-between; font-size: 13px; color: #93a4c4; margin-bottom: 8px; }
-  .speed-val { color: #4f9bff; font-weight: 700; }
-  input[type=range] { width: 100%; -webkit-appearance: none; height: 8px; border-radius: 6px; background: #26334d; outline: none; }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(180deg,#5aa2ff,#2f6fe0); border: 2px solid #cfe0ff; cursor: pointer; }
-  input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #4f9bff; border: 2px solid #cfe0ff; cursor: pointer; }
-
-  .status { font-size: 13px; color: #7f8ca8; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-  .status b { color: #cfe0ff; font-weight: 600; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: #2ee06a; display: inline-block; margin-right: 6px; box-shadow: 0 0 8px #2ee06a; }
+  .status-box {
+    width: 100%; max-width: 320px; background: #131b2b; border: 1px solid #223050;
+    border-radius: 16px; padding: 12px 16px; display: flex; flex-direction: column;
+    align-items: center; gap: 6px;
+  }
+  .status-main { font-size: 16px; color: #e8eefc; display: flex; align-items: center; gap: 8px; }
+  .status-main b { color: #4f9bff; font-weight: 700; letter-spacing: .5px; }
+  .status-sub { font-size: 12px; color: #7f8ca8; }
+  .status-sub b { color: #cfe0ff; font-weight: 600; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #2ee06a; display: inline-block; box-shadow: 0 0 8px #2ee06a; }
+  .dot.err { background: #ff3b5c; box-shadow: 0 0 8px #ff3b5c; }
 </style>
 </head>
 <body>
@@ -164,33 +167,43 @@ static const char PAGE_HTML[] PROGMEM = R"rawliteral(
     <button class="ctl down"  data-dir="b">&#9660;</button>
   </div>
 
-  <div class="speed-box">
-    <div class="speed-row"><span>Toc do</span><span class="speed-val" id="speedVal">63%</span></div>
-    <input type="range" id="speed" min="0" max="255" value="160">
-  </div>
-
-  <div class="status">
-    <span><span class="dot"></span><b id="dirLabel">DUNG</b></span>
-    <span>IP: <b id="ipLabel">...</b></span>
-  </div>
-
-  <div style="font-size: 11px; color: #7f8ca8; text-align: center; margin-top: 4px;">
-    Hỗ Trợ Đồ Án (Web / App / IoT) &bull; Zalo: <a href="https://zalo.me/0394241597" target="_blank" style="color: #4f9bff; text-decoration: none; font-weight: 600;">0394.241.597</a>
+  <div class="status-box">
+    <div class="status-main">
+      <span class="dot" id="connDot"></span>
+      <span>Trang thai: <b id="dirLabel">DUNG</b></span>
+    </div>
+    <div class="status-sub">IP: <b id="ipLabel">...</b></div>
   </div>
 
 <script>
-  const MAX = 255;
   const names = { f: 'TIEN', b: 'LUI', l: 'QUAY TRAI', r: 'QUAY PHAI', s: 'DUNG' };
-  let speed = 160, holding = null, keepAlive = null, sendTimer = null;
+  let holding = null, keepAlive = null;
 
-  const speedInput = document.getElementById('speed');
-  const speedVal = document.getElementById('speedVal');
   const dirLabel = document.getElementById('dirLabel');
   const ipLabel = document.getElementById('ipLabel');
+  const connDot = document.getElementById('connDot');
+
+  function setActiveButton(dir) {
+    document.querySelectorAll('button.ctl').forEach(b => {
+      b.classList.toggle('on', b.dataset.dir === dir && dir !== 's');
+    });
+  }
+
+  function showDir(dir) {
+    dirLabel.textContent = names[dir] || 'DUNG';
+    setActiveButton(dir);
+  }
 
   function send(dir) {
-    dirLabel.textContent = names[dir] || 'DUNG';
-    fetch('/cmd?d=' + dir + '&spd=' + speed).catch(() => {});
+    showDir(dir);
+    fetch('/cmd?d=' + dir)
+      .then(r => {
+        if (!r.ok) throw new Error();
+        connDot.classList.remove('err');
+      })
+      .catch(() => {
+        connDot.classList.add('err');
+      });
   }
 
   function startHold(dir) {
@@ -218,39 +231,28 @@ static const char PAGE_HTML[] PROGMEM = R"rawliteral(
       e.preventDefault();
       if (btn.hasPointerCapture && btn.hasPointerCapture(e.pointerId)) return;
       try { btn.setPointerCapture(e.pointerId); } catch (_) {}
-      btn.classList.add('on');
       startHold(dir);
     });
     ['pointerup', 'pointercancel'].forEach(ev =>
-      btn.addEventListener(ev, () => { btn.classList.remove('on'); endHold(); }));
+      btn.addEventListener(ev, () => endHold()));
   });
 
   window.addEventListener('blur', endHold);
   document.addEventListener('visibilitychange', () => { if (document.hidden) endHold(); });
   document.addEventListener('contextmenu', e => e.preventDefault());
 
-  function updateSpeedLabel() {
-    const v = parseInt(speedInput.value, 10);
-    speed = v;
-    speedVal.textContent = Math.round(v / MAX * 100) + '%';
-  }
-
-  speedInput.addEventListener('input', () => {
-    updateSpeedLabel();
-    clearTimeout(sendTimer);
-    sendTimer = setTimeout(() => { if (holding) send(holding); }, 120);
-  });
-
   function refreshStatus() {
     fetch('/status').then(r => r.json()).then(s => {
+      connDot.classList.remove('err');
       ipLabel.textContent = s.ip || '...';
-      if (!holding) dirLabel.textContent = names[s.dir] || 'DUNG';
-    }).catch(() => {});
+      if (!holding) showDir(s.dir || 's');
+    }).catch(() => {
+      connDot.classList.add('err');
+    });
   }
 
-  updateSpeedLabel();
   refreshStatus();
-  setInterval(refreshStatus, 2000);
+  setInterval(refreshStatus, 500);
 </script>
 </body>
 </html>
