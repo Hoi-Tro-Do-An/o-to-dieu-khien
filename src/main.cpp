@@ -196,7 +196,7 @@ static const char PAGE_HTML[] PROGMEM = R"rawliteral(
 
   function send(dir) {
     showDir(dir);
-    fetch('/cmd?d=' + dir)
+    fetch('/cmd?d=' + dir + '&t=' + Date.now(), { cache: 'no-store' })
       .then(r => {
         if (!r.ok) throw new Error();
         connDot.classList.remove('err');
@@ -207,6 +207,7 @@ static const char PAGE_HTML[] PROGMEM = R"rawliteral(
   }
 
   function startHold(dir) {
+    if (holding === dir) return;
     holding = dir;
     send(dir);
     clearInterval(keepAlive);
@@ -223,18 +224,22 @@ static const char PAGE_HTML[] PROGMEM = R"rawliteral(
 
   document.querySelectorAll('button.ctl').forEach(btn => {
     const dir = btn.dataset.dir;
-    if (dir === 's') {
-      btn.addEventListener('pointerdown', e => { e.preventDefault(); endHold(); send('s'); });
-      return;
-    }
-    btn.addEventListener('pointerdown', e => {
+    const onDown = e => {
       e.preventDefault();
-      if (btn.hasPointerCapture && btn.hasPointerCapture(e.pointerId)) return;
-      try { btn.setPointerCapture(e.pointerId); } catch (_) {}
+      if (dir === 's') { endHold(); send('s'); return; }
       startHold(dir);
-    });
-    ['pointerup', 'pointercancel'].forEach(ev =>
-      btn.addEventListener(ev, () => endHold()));
+    };
+    const onUp = e => {
+      if (dir === 's') return;
+      e.preventDefault();
+      endHold();
+    };
+    btn.addEventListener('touchstart', onDown, { passive: false });
+    btn.addEventListener('touchend', onUp, { passive: false });
+    btn.addEventListener('touchcancel', onUp, { passive: false });
+    btn.addEventListener('mousedown', onDown);
+    btn.addEventListener('mouseup', onUp);
+    btn.addEventListener('mouseleave', () => { if (holding === dir) endHold(); });
   });
 
   window.addEventListener('blur', endHold);
@@ -242,7 +247,7 @@ static const char PAGE_HTML[] PROGMEM = R"rawliteral(
   document.addEventListener('contextmenu', e => e.preventDefault());
 
   function refreshStatus() {
-    fetch('/status').then(r => r.json()).then(s => {
+    fetch('/status?t=' + Date.now(), { cache: 'no-store' }).then(r => r.json()).then(s => {
       connDot.classList.remove('err');
       ipLabel.textContent = s.ip || '...';
       if (!holding) showDir(s.dir || 's');
@@ -263,6 +268,8 @@ void handleRoot() {
 }
 
 void handleCmd() {
+  server.sendHeader("Cache-Control", "no-store");
+  server.sendHeader("Connection", "close");
   String dirArg = server.arg("d");
   if (server.hasArg("spd")) {
     speed = clampSpeed(server.arg("spd").toInt());
@@ -277,6 +284,8 @@ void handleCmd() {
 }
 
 void handleStatus() {
+  server.sendHeader("Cache-Control", "no-store");
+  server.sendHeader("Connection", "close");
   String ip = WiFi.status() == WL_CONNECTED ? WiFi.localIP().toString() : WiFi.softAPIP().toString();
   String json = "{\"dir\":\"";
   json += currentDir;
